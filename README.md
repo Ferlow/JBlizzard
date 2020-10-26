@@ -4,6 +4,7 @@ An experimental API wrapper for the [blizzard API](https://develop.battle.net/),
 For now, I will focus on implementing the API for World of Warcraft (retail).
 
 ## [Project status](https://github.com/Ferlow/JBlizzard/projects)
+Current unofficial version pre-0.1
 
 ## Usage
 ### Create ClientID & Client secret
