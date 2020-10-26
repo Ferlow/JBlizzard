@@ -1,7 +1,9 @@
 # JBlizzard
-## about
+## About
 An experimental API wrapper for the [blizzard API](https://develop.battle.net/), written in java. Use at your own risk.
 For now, I will focus on implementing the API for World of Warcraft (retail).
+
+## [Project status](https://github.com/Ferlow/JBlizzard/projects)
 
 ## Usage
 ### Create ClientID & Client secret
@@ -20,3 +22,4 @@ public class Run {
 }
 ```
 ```Output: 500```
+
