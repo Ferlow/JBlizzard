@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import kong.unirest.Unirest;
 import online.ferlow.jblizzard.entity.constants.Locale;
 import online.ferlow.jblizzard.entity.constants.Regionality;
-import online.ferlow.jblizzard.entity.constants.WowRequestEntity;
+import online.ferlow.jblizzard.entity.constants.WowDataRequestEntity;
 import online.ferlow.jblizzard.oauth.AccessToken;
 
 
@@ -23,30 +23,32 @@ public class RequestHandler {
         RequestHandler.locale = locale;
     }
 
-    public static String getJson(Regionality region, WowRequestEntity wowRequestEntity) {
+    public static String getJson(Regionality region, WowDataRequestEntity wowDataRequestEntity) {
         String requestUrl = "https://".concat(region.getIdentifier())
                 .concat(BASE_URL)
-                .concat(wowRequestEntity.getEndpoint())
+                .concat(wowDataRequestEntity.getEndpoint())
                 .concat("?namespace=")
-                .concat(wowRequestEntity.getRequiredNamespace().getIdentifier())
+                .concat(wowDataRequestEntity.getRequiredNamespace().getIdentifier())
                 .concat(region.getIdentifier())
                 .concat("&locale=")
                 .concat(locale.getCode());
+        System.out.println(requestUrl);
         return Unirest.get(requestUrl)
                 .header("Authorization", "Bearer " + accessToken.getAsString())
                 .asString().getBody();
     }
 
-    public static String getJsonFromParam(Regionality region, WowRequestEntity wowRequestEntity, String paramString) {
+    public static String getJsonFromParam(Regionality region, WowDataRequestEntity wowDataRequestEntity, String paramString) {
         String requestUrl = "https://".concat(region.getIdentifier())
                 .concat(BASE_URL)
-                .concat(wowRequestEntity.getEndpoint())
+                .concat(wowDataRequestEntity.getEndpoint())
                 .concat(paramString)
                 .concat("?namespace=")
-                .concat(wowRequestEntity.getRequiredNamespace().getIdentifier())
+                .concat(wowDataRequestEntity.getRequiredNamespace().getIdentifier())
                 .concat(region.getIdentifier())
                 .concat("&locale=")
                 .concat(locale.getCode());
+        System.out.println(requestUrl);
         return Unirest.get(requestUrl)
                 .header("Authorization", "Bearer " + accessToken.getAsString())
                 .asString().getBody();

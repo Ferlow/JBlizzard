@@ -1,13 +1,17 @@
 package online.ferlow.jblizzard.entity.wowr.data;
 
+import com.google.gson.annotations.SerializedName;
+
 public class WowToken {
-    private long last_updated_timestamp, price;
+    @SerializedName("last_updated_timestamp")
+    private long lastUpdatedAt;
+    private long price;
 
     public long getPriceInGold() {
         return price / 10000;
     }
 
-    public long getLast_updated_timestamp() {
-        return last_updated_timestamp;
+    public long getLastUpdatedTimestamp() {
+        return lastUpdatedAt;
     }
 }

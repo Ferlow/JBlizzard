@@ -1,10 +1,8 @@
 package online.ferlow.jblizzard.entity.wowr;
 
 import online.ferlow.jblizzard.entity.constants.Regionality;
-import online.ferlow.jblizzard.entity.constants.WowRequestEntity;
-import online.ferlow.jblizzard.entity.wowr.data.Realm;
-import online.ferlow.jblizzard.entity.wowr.data.RealmIndex;
-import online.ferlow.jblizzard.entity.wowr.data.WowToken;
+import online.ferlow.jblizzard.entity.constants.WowDataRequestEntity;
+import online.ferlow.jblizzard.entity.wowr.data.*;
 import online.ferlow.jblizzard.request.RequestHandler;
 
 import java.util.List;
@@ -21,18 +19,34 @@ public class GameRegion {
     }
 
     public WowToken getWowToken() {
-        String json = RequestHandler.getJson(regionality, WowRequestEntity.WOW_TOKEN);
-        return RequestHandler.getGSON().fromJson(json, WowRequestEntity.WOW_TOKEN.getResponseClass());
+        String json = RequestHandler.getJson(regionality, WowDataRequestEntity.WOW_TOKEN);
+        return RequestHandler.getGSON().fromJson(json, WowDataRequestEntity.WOW_TOKEN.getResponseClass());
     }
 
     public List<Realm> getRealms() {
-        String json = RequestHandler.getJson(regionality, WowRequestEntity.REALM_INDEX);
-        RealmIndex realms = RequestHandler.getGSON().fromJson(json, WowRequestEntity.REALM_INDEX.getResponseClass());
+        String json = RequestHandler.getJson(regionality, WowDataRequestEntity.REALM_INDEX);
+        RealmIndex realms = RequestHandler.getGSON().fromJson(json, WowDataRequestEntity.REALM_INDEX.getResponseClass());
         return realms.getRealms();
     }
 
     public Realm getRealmByName(String name) {
-        String json = RequestHandler.getJsonFromParam(regionality, WowRequestEntity.REALM, name);
-        return RequestHandler.getGSON().fromJson(json, WowRequestEntity.REALM.getResponseClass());
+        String json = RequestHandler.getJsonFromParam(regionality, WowDataRequestEntity.REALM, name);
+        return RequestHandler.getGSON().fromJson(json, WowDataRequestEntity.REALM.getResponseClass());
+    }
+
+    public Achievement getAchievementById(String id) {
+        String json = RequestHandler.getJsonFromParam(regionality, WowDataRequestEntity.ACHIEVEMENT, id);
+        return RequestHandler.getGSON().fromJson(json, WowDataRequestEntity.ACHIEVEMENT.getResponseClass());
+    }
+
+    public AchievementCategory getAchievementCategoryById(String id) {
+        String json = RequestHandler.getJsonFromParam(regionality, WowDataRequestEntity.ACHIEVEMENT_CATEGORY, id);
+        return RequestHandler.getGSON().fromJson(json, WowDataRequestEntity.ACHIEVEMENT_CATEGORY.getResponseClass());
+    }
+
+    public List<Achievement> getAchievements() {
+        String json = RequestHandler.getJson(regionality, WowDataRequestEntity.ACHIEVEMENT_INDEX);
+        AchievementIndex achievements = RequestHandler.getGSON().fromJson(json, WowDataRequestEntity.ACHIEVEMENT_INDEX.getResponseClass());
+        return achievements.getAchievements();
     }
 }
