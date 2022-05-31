@@ -1,4 +1,4 @@
-package online.ferlow.jblizzard.entity.wowr.data;
+package online.ferlow.jblizzard.entity.wowr.data.achievement;
 
 import java.util.List;
 
@@ -16,5 +16,14 @@ public class AchievementCategory {
 
     public List<Achievement> getAchievements() {
         return achievements;
+    }
+
+    @Override
+    public String toString() {
+        return "AchievementCategory{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", achievements=" + achievements +
+                '}';
     }
 }

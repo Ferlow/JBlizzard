@@ -1,4 +1,4 @@
-package online.ferlow.jblizzard.entity.wowr.data;
+package online.ferlow.jblizzard.entity.wowr.data.realm;
 
 import java.util.List;
 

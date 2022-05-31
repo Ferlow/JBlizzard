@@ -1,4 +1,4 @@
-package online.ferlow.jblizzard.entity.wowr.data;
+package online.ferlow.jblizzard.entity.wowr.data.achievement;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -31,6 +31,18 @@ public class Achievement {
 
     public boolean isAccountWide() {
         return isAccountWide;
+    }
+
+    @Override
+    public String toString() {
+        return "Achievement{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", points=" + points +
+                ", isAccountWide=" + isAccountWide +
+                ", category=" + category +
+                '}';
     }
 }
 
