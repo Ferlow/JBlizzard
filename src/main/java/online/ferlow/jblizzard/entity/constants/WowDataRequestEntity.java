@@ -8,6 +8,10 @@ import online.ferlow.jblizzard.entity.wowr.data.auction.AuctionIndex;
 import online.ferlow.jblizzard.entity.wowr.data.azerite.AzeriteEssence;
 import online.ferlow.jblizzard.entity.wowr.data.azerite.AzeriteEssenceIndex;
 import online.ferlow.jblizzard.entity.wowr.data.azerite.AzeriteEssenceMedia;
+import online.ferlow.jblizzard.entity.wowr.data.covenant.Covenant;
+import online.ferlow.jblizzard.entity.wowr.data.covenant.CovenantIndex;
+import online.ferlow.jblizzard.entity.wowr.data.realm.ConnectedRealm;
+import online.ferlow.jblizzard.entity.wowr.data.realm.ConnectedRealmIndex;
 import online.ferlow.jblizzard.entity.wowr.data.realm.Realm;
 import online.ferlow.jblizzard.entity.wowr.data.realm.RealmIndex;
 import online.ferlow.jblizzard.entity.wowr.data.token.WowToken;
@@ -21,10 +25,14 @@ public enum WowDataRequestEntity {
     ACHIEVEMENT_MEDIA("achievement/",Namespace.STATIC, AchievementMedia.class,true),
     REALM("realm/", Namespace.DYNAMIC, Realm.class),
     REALM_INDEX("realm/index", Namespace.DYNAMIC, RealmIndex.class),
+    CONNECTED_REALM_INDEX("connected-realm/index",Namespace.DYNAMIC, ConnectedRealmIndex.class),
+    CONNECTED_REALM("connected-realm/",Namespace.DYNAMIC, ConnectedRealm.class),
     AUCTION("connected-realm/",Namespace.DYNAMIC, AuctionIndex.class),
     AZERITE_ESSENCE_INDEX("azerite-essence/",Namespace.STATIC, AzeriteEssenceIndex.class),
     AZERITE_ESSENCE("azerite-essence/",Namespace.STATIC,AzeriteEssence.class),
     AZERITE_ESSENCE_MEDIA("azerite-essence/",Namespace.STATIC, AzeriteEssenceMedia.class,true),
+    COVENANT_INDEX("covenant/index",Namespace.STATIC, CovenantIndex.class),
+    COVENANT("covenant/",Namespace.STATIC, Covenant.class),
     WOW_TOKEN("token/", Namespace.DYNAMIC, WowToken.class);
 
     private final String endpoint;

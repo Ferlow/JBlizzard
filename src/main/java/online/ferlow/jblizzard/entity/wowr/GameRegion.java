@@ -11,12 +11,18 @@ import online.ferlow.jblizzard.entity.wowr.data.auction.AuctionIndex;
 import online.ferlow.jblizzard.entity.wowr.data.azerite.AzeriteEssence;
 import online.ferlow.jblizzard.entity.wowr.data.azerite.AzeriteEssenceIndex;
 import online.ferlow.jblizzard.entity.wowr.data.azerite.AzeriteEssenceMedia;
+import online.ferlow.jblizzard.entity.wowr.data.covenant.Covenant;
+import online.ferlow.jblizzard.entity.wowr.data.covenant.CovenantIndex;
+import online.ferlow.jblizzard.entity.wowr.data.realm.ConnectedRealm;
+import online.ferlow.jblizzard.entity.wowr.data.realm.ConnectedRealmIndex;
 import online.ferlow.jblizzard.entity.wowr.data.realm.Realm;
 import online.ferlow.jblizzard.entity.wowr.data.realm.RealmIndex;
 import online.ferlow.jblizzard.entity.wowr.data.token.WowToken;
 import online.ferlow.jblizzard.request.RequestHandler;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GameRegion {
     private final String name;
@@ -45,18 +51,38 @@ public class GameRegion {
         return RequestHandler.getGSON().fromJson(json, WowDataRequestEntity.REALM.getResponseClass());
     }
 
-    public Achievement getAchievementById(String id) {
-        String json = RequestHandler.getJsonFromParam(regionality, WowDataRequestEntity.ACHIEVEMENT, id);
+    // Need to have the regex for extract the realm id
+    public List<ConnectedRealm> getConnectedRealms() {
+        String json = RequestHandler.getJson(regionality,WowDataRequestEntity.CONNECTED_REALM_INDEX);
+        ConnectedRealmIndex connectedRealms = RequestHandler.getGSON().fromJson(json,WowDataRequestEntity.CONNECTED_REALM_INDEX.getResponseClass());
+        connectedRealms.getConnectedRealms().forEach(connectedRealm -> {
+            String href = connectedRealm.getHref();
+            Pattern pattern = Pattern.compile("[0-9]{1,3}", Pattern.MULTILINE);
+            Matcher matcher = pattern.matcher(href);
+            while ( matcher.find() ) {
+                connectedRealm.setId(Integer.parseInt(matcher.group()));
+            }
+        });
+        return connectedRealms.getConnectedRealms();
+    }
+
+    public ConnectedRealm getConnectedRealm( String realmId) {
+        String json = RequestHandler.getJsonFromParam(regionality,WowDataRequestEntity.CONNECTED_REALM,realmId);
+        return RequestHandler.getGSON().fromJson(json,WowDataRequestEntity.CONNECTED_REALM.getResponseClass());
+    }
+
+    public Achievement getAchievementById(String achievementId) {
+        String json = RequestHandler.getJsonFromParam(regionality, WowDataRequestEntity.ACHIEVEMENT, achievementId);
         return RequestHandler.getGSON().fromJson(json, WowDataRequestEntity.ACHIEVEMENT.getResponseClass());
     }
 
-    public AchievementCategory getAchievementCategoryById(String id) {
-        String json = RequestHandler.getJsonFromParam(regionality, WowDataRequestEntity.ACHIEVEMENT_CATEGORY, id);
+    public AchievementCategory getAchievementCategoryById(String achievementId) {
+        String json = RequestHandler.getJsonFromParam(regionality, WowDataRequestEntity.ACHIEVEMENT_CATEGORY, achievementId);
         return RequestHandler.getGSON().fromJson(json, WowDataRequestEntity.ACHIEVEMENT_CATEGORY.getResponseClass());
     }
 
-    public AchievementMedia getAchievementMediaById(String id) {
-        String json = RequestHandler.getJsonFromParam(regionality,WowDataRequestEntity.ACHIEVEMENT_MEDIA,id);
+    public AchievementMedia getAchievementMediaById(String achievementId) {
+        String json = RequestHandler.getJsonFromParam(regionality,WowDataRequestEntity.ACHIEVEMENT_MEDIA,achievementId);
         return RequestHandler.getGSON().fromJson(json,WowDataRequestEntity.ACHIEVEMENT_MEDIA.getResponseClass());
     }
 
@@ -72,7 +98,7 @@ public class GameRegion {
         return auctions.getAuctions();
     }
 
-    public List<AzeriteEssence> getAzeriteEssence() {
+    public List<AzeriteEssence> getAzeriteEssences() {
         String json = RequestHandler.getJson(regionality,WowDataRequestEntity.AZERITE_ESSENCE_INDEX);
         AzeriteEssenceIndex azeriteEssenceIndex = RequestHandler.getGSON().fromJson(json,WowDataRequestEntity.AZERITE_ESSENCE_INDEX.getResponseClass());
         return azeriteEssenceIndex.getAzeriteEssencesList();
@@ -87,5 +113,16 @@ public class GameRegion {
         String json = RequestHandler.getJsonFromParam(regionality, WowDataRequestEntity.AZERITE_ESSENCE_MEDIA,essenceId);
         return RequestHandler.getGSON().fromJson(json,WowDataRequestEntity.AZERITE_ESSENCE_MEDIA.getResponseClass());
 
+    }
+
+    public List<Covenant> getCovenants() {
+        String json = RequestHandler.getJson(regionality,WowDataRequestEntity.COVENANT_INDEX);
+        CovenantIndex covenantList = RequestHandler.getGSON().fromJson(json,WowDataRequestEntity.COVENANT_INDEX.getResponseClass());
+        return covenantList.getCovenantList();
+    }
+
+    public Covenant getCovenantById( String covenantId ) {
+        String json = RequestHandler.getJsonFromParam(regionality,WowDataRequestEntity.COVENANT,covenantId);
+        return RequestHandler.getGSON().fromJson(json,WowDataRequestEntity.COVENANT.getResponseClass());
     }
 }
