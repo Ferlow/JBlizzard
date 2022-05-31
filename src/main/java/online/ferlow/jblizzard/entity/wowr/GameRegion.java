@@ -2,7 +2,18 @@ package online.ferlow.jblizzard.entity.wowr;
 
 import online.ferlow.jblizzard.entity.constants.Regionality;
 import online.ferlow.jblizzard.entity.constants.WowDataRequestEntity;
-import online.ferlow.jblizzard.entity.wowr.data.*;
+import online.ferlow.jblizzard.entity.wowr.data.achievement.Achievement;
+import online.ferlow.jblizzard.entity.wowr.data.achievement.AchievementCategory;
+import online.ferlow.jblizzard.entity.wowr.data.achievement.AchievementIndex;
+import online.ferlow.jblizzard.entity.wowr.data.achievement.AchievementMedia;
+import online.ferlow.jblizzard.entity.wowr.data.auction.Auction;
+import online.ferlow.jblizzard.entity.wowr.data.auction.AuctionIndex;
+import online.ferlow.jblizzard.entity.wowr.data.azerite.AzeriteEssence;
+import online.ferlow.jblizzard.entity.wowr.data.azerite.AzeriteEssenceIndex;
+import online.ferlow.jblizzard.entity.wowr.data.azerite.AzeriteEssenceMedia;
+import online.ferlow.jblizzard.entity.wowr.data.realm.Realm;
+import online.ferlow.jblizzard.entity.wowr.data.realm.RealmIndex;
+import online.ferlow.jblizzard.entity.wowr.data.token.WowToken;
 import online.ferlow.jblizzard.request.RequestHandler;
 
 import java.util.List;
@@ -44,9 +55,37 @@ public class GameRegion {
         return RequestHandler.getGSON().fromJson(json, WowDataRequestEntity.ACHIEVEMENT_CATEGORY.getResponseClass());
     }
 
+    public AchievementMedia getAchievementMediaById(String id) {
+        String json = RequestHandler.getJsonFromParam(regionality,WowDataRequestEntity.ACHIEVEMENT_MEDIA,id);
+        return RequestHandler.getGSON().fromJson(json,WowDataRequestEntity.ACHIEVEMENT_MEDIA.getResponseClass());
+    }
+
     public List<Achievement> getAchievements() {
         String json = RequestHandler.getJson(regionality, WowDataRequestEntity.ACHIEVEMENT_INDEX);
         AchievementIndex achievements = RequestHandler.getGSON().fromJson(json, WowDataRequestEntity.ACHIEVEMENT_INDEX.getResponseClass());
         return achievements.getAchievements();
+    }
+
+    public List<Auction> getAuctions(String connectedRealm) {
+        String json = RequestHandler.getJsonFromParam(regionality,WowDataRequestEntity.AUCTION,connectedRealm + "/auctions");
+        AuctionIndex auctions = RequestHandler.getGSON().fromJson(json,WowDataRequestEntity.AUCTION.getResponseClass());
+        return auctions.getAuctions();
+    }
+
+    public List<AzeriteEssence> getAzeriteEssence() {
+        String json = RequestHandler.getJson(regionality,WowDataRequestEntity.AZERITE_ESSENCE_INDEX);
+        AzeriteEssenceIndex azeriteEssenceIndex = RequestHandler.getGSON().fromJson(json,WowDataRequestEntity.AZERITE_ESSENCE_INDEX.getResponseClass());
+        return azeriteEssenceIndex.getAzeriteEssencesList();
+    }
+
+    public AzeriteEssence getAzeriteEssenceById ( String essenceId ) {
+        String json = RequestHandler.getJsonFromParam(regionality, WowDataRequestEntity.AZERITE_ESSENCE,essenceId);
+        return RequestHandler.getGSON().fromJson(json,WowDataRequestEntity.AZERITE_ESSENCE.getResponseClass());
+    }
+
+    public AzeriteEssenceMedia getAzeriteEssenceMediaById ( String essenceId ) {
+        String json = RequestHandler.getJsonFromParam(regionality, WowDataRequestEntity.AZERITE_ESSENCE_MEDIA,essenceId);
+        return RequestHandler.getGSON().fromJson(json,WowDataRequestEntity.AZERITE_ESSENCE_MEDIA.getResponseClass());
+
     }
 }

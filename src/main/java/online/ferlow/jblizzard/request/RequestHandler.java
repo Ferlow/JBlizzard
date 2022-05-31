@@ -10,7 +10,7 @@ import online.ferlow.jblizzard.oauth.AccessToken;
 
 
 public class RequestHandler {
-    private static final String BASE_URL = ".api.blizzard.com/";
+    private static final String BASE_URL = ".api.blizzard.com";
     private static final Gson GSON = new GsonBuilder().create();
     private static Locale locale;
     private static AccessToken accessToken;
@@ -42,7 +42,7 @@ public class RequestHandler {
         String requestUrl = "https://".concat(region.getIdentifier())
                 .concat(BASE_URL)
                 .concat(wowDataRequestEntity.getEndpoint())
-                .concat(paramString)
+                .concat(paramString )
                 .concat("?namespace=")
                 .concat(wowDataRequestEntity.getRequiredNamespace().getIdentifier())
                 .concat(region.getIdentifier())
